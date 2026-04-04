@@ -1,0 +1,148 @@
+# ssh-image-paste
+
+**Paste clipboard images to remote SSH servers from macOS.**
+
+One keystroke: grab the screenshot from your clipboard, upload it to the remote machine you're SSH'd into, and get the file path ready to paste.
+
+[中文文档](README.zh-CN.md)
+
+## Why?
+
+When working remotely via SSH — especially with AI coding tools like **Claude Code**, **Cursor Remote SSH**, or **VS Code Remote** — there's no built-in way to share a screenshot with the remote environment. You'd have to manually save the file, SCP it, then type the path.
+
+`ssh-image-paste` does all of that in one step.
+
+## How It Works
+
+```
+┌──────────┐    pngpaste    ┌───────────┐    SCP    ┌──────────────┐
+│  macOS   │ ──────────────>│ temp file │ ────────> │ remote:      │
+│ clipboard│                └───────────┘           │ /tmp/clipboard│
+└──────────┘                                        │ /clip_xxx.png │
+                                                    └───────┬──────┘
+                                                            │
+                                              path copied to clipboard
+                                              (/tmp/clipboard/clip_xxx.png)
+```
+
+1. Captures the image from macOS clipboard using `pngpaste`
+2. Detects the active SSH session from your frontmost terminal
+3. Uploads the image via `scp`
+4. Copies the remote file path to your clipboard
+5. Shows a macOS notification
+
+## Install
+
+### Quick install (recommended)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/weworkto/ssh-image-paste/main/install.sh | bash
+```
+
+### Manual install
+
+```bash
+# Install dependency
+brew install pngpaste
+
+# Download and install
+curl -fsSL https://raw.githubusercontent.com/weworkto/ssh-image-paste/main/ssh-image-paste -o ~/.local/bin/ssh-image-paste
+chmod +x ~/.local/bin/ssh-image-paste
+```
+
+## Usage
+
+```bash
+# Auto-detect SSH target from current terminal
+ssh-image-paste
+
+# Specify target manually
+ssh-image-paste user@host
+
+# Show help
+ssh-image-paste --help
+```
+
+### Typical workflow
+
+1. Take a screenshot on macOS (`Cmd+Shift+4` or `Cmd+Shift+5`)
+2. Press your shortcut (e.g., `Cmd+Shift+V`) to run `ssh-image-paste`
+3. The remote path is now in your clipboard — just `Cmd+V` to paste it wherever you need
+
+### Set up a keyboard shortcut (iTerm2)
+
+1. Open **Preferences** > **Keys** > **Key Bindings**
+2. Click **+** to add a new binding
+3. Set shortcut: `Cmd+Shift+V`
+4. Action: **Run Command**
+5. Command: `~/.local/bin/ssh-image-paste`
+
+### Set up a keyboard shortcut (Warp / others)
+
+For terminals without built-in key binding support, use macOS Automator:
+
+1. Open **Automator** > **Quick Action**
+2. Add **Run Shell Script** action
+3. Set command: `~/.local/bin/ssh-image-paste`
+4. Save as "Paste Image to SSH"
+5. Bind a shortcut in **System Settings** > **Keyboard** > **Shortcuts** > **Services**
+
+## Supported Terminals
+
+| Terminal | Detection Method |
+|----------|-----------------|
+| **iTerm2** | AppleScript (TTY of current session) |
+| **Terminal.app** | AppleScript (TTY of selected tab) |
+| **Warp** | Process scan (all SSH sessions) |
+| **Ghostty** | Process scan |
+| **Alacritty** | Process scan |
+| **Kitty** | Process scan |
+
+For terminals using process scan: if multiple SSH sessions are active, a dialog will let you pick the target.
+
+## Configuration
+
+| Environment Variable | Default | Description |
+|---------------------|---------|-------------|
+| `SSH_IMAGE_PASTE_DIR` | `/tmp/clipboard` | Remote directory for uploaded images |
+| `SSH_IMAGE_PASTE_KEEP` | `20` | Number of recent images to keep on remote |
+
+Example:
+
+```bash
+export SSH_IMAGE_PASTE_DIR="~/screenshots"
+export SSH_IMAGE_PASTE_KEEP=50
+```
+
+## Requirements
+
+- **macOS** (uses `pbcopy`, `osascript`, `pngpaste`)
+- **pngpaste** — `brew install pngpaste`
+- An active SSH connection (or specify target with `ssh-image-paste user@host`)
+
+## Use Cases
+
+- **Claude Code** — Paste screenshots into conversations with your AI coding assistant
+- **Cursor Remote SSH** — Share UI mockups or error screenshots with Cursor
+- **VS Code Remote** — Reference images in remote development
+- **Remote pair programming** — Quickly share visual context with colleagues
+- **Bug reports** — Capture and attach screenshots to remote issue trackers
+
+## FAQ
+
+**Q: Does it work with SSH jump hosts / ProxyJump?**
+A: Yes. It detects the final SSH process and resolves the target. SSH config aliases are also supported via `ssh -G`.
+
+**Q: What if I have multiple SSH sessions?**
+A: For iTerm2 and Terminal.app, it detects the session in your active tab. For other terminals, it shows a picker dialog.
+
+**Q: Can I use it without an active SSH session?**
+A: Yes — specify the target manually: `ssh-image-paste user@host`
+
+## Contributing
+
+Issues and pull requests are welcome! This project is in its early stages — feedback on terminal compatibility, edge cases, and feature ideas is especially appreciated.
+
+## License
+
+TBD
