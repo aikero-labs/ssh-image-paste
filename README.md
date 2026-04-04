@@ -147,6 +147,9 @@ export SSH_IMAGE_PASTE_KEEP=50
 
 ## FAQ
 
+**Q: Does it work inside VS Code Remote or Cursor's built-in terminal?**
+A: No. The script runs on **local macOS** (it needs `pngpaste`, `osascript`, `pbcopy`). It cannot run inside a remote terminal. The workflow is: keep an iTerm2 session SSH'd into the same server, press your shortcut in iTerm2 to upload, then switch back to VS Code/Cursor and paste the path (`Cmd+V`).
+
 **Q: Does it work with SSH jump hosts / ProxyJump?**
 A: Yes. It detects the final SSH process and resolves the target. SSH config aliases are also supported via `ssh -G`.
 

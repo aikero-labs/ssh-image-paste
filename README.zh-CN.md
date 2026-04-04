@@ -147,6 +147,9 @@ export SSH_IMAGE_PASTE_KEEP=50
 
 ## 常见问题
 
+**Q: 在 VS Code Remote 或 Cursor 内置终端里能用吗？**
+A: 不能。脚本运行在**本地 macOS**（需要 `pngpaste`、`osascript`、`pbcopy`），无法在远程终端中执行。工作流是：保持 iTerm2 也 SSH 连着同一台服务器，在 iTerm2 里按快捷键上传截图，然后回到 VS Code/Cursor 粘贴路径（`Cmd+V`）。
+
 **Q: 支持 SSH 跳板机 / ProxyJump 吗？**
 A: 支持。脚本检测最终的 SSH 进程并解析目标。也支持通过 `ssh -G` 解析 SSH config alias。
 
