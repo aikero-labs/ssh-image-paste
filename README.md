@@ -81,25 +81,19 @@ The script itself doesn't bind any shortcut — **you choose your own**. Here ar
 | `Cmd+Shift+V` | Mnemonic: paste **V**ariant |
 | `Ctrl+Shift+U` | Mnemonic: **U**pload |
 
-Pick whatever feels natural to you, then set it up:
+Pick whatever feels natural to you, then set it up using **macOS Automator** (works with any terminal):
 
-#### iTerm2
-
-1. Open **Preferences** > **Keys** > **Key Bindings**
-2. Click **+** to add a new binding
-3. Set your preferred shortcut
-4. Action: **Run Command**
-5. Command: `~/.local/bin/ssh-image-paste`
-
-#### Warp / Ghostty / other terminals
-
-For terminals without built-in key binding support, use macOS Automator:
+#### Set up with Automator (recommended, works globally)
 
 1. Open **Automator** > **Quick Action**
-2. Add **Run Shell Script** action
-3. Set command: `~/.local/bin/ssh-image-paste`
-4. Save as "Paste Image to SSH"
-5. Bind your preferred shortcut in **System Settings** > **Keyboard** > **Shortcuts** > **Services**
+2. Set "Workflow receives" to **no input**
+3. Add **Run Shell Script** action
+4. Set command: `~/.local/bin/ssh-image-paste`
+5. Save as "Paste Image to SSH"
+6. Go to **System Settings** > **Keyboard** > **Keyboard Shortcuts** > **Services**
+7. Find "Paste Image to SSH" and assign your preferred shortcut
+
+This works with **all terminals** — iTerm2, Warp, Ghostty, Terminal.app, etc.
 
 ## Supported Terminals
 

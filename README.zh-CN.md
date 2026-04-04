@@ -81,25 +81,19 @@ ssh-image-paste --help
 | `Cmd+Shift+V` | paste **V**ariant（粘贴变体） |
 | `Ctrl+Shift+U` | **U**pload（上传） |
 
-选好后，按以下方式设置：
+选好后，通过 **macOS 自动操作（Automator）** 设置（适用于所有终端）：
 
-#### iTerm2
+#### 用 Automator 设置快捷键（推荐，全局生效）
 
-1. 打开 **Preferences** > **Keys** > **Key Bindings**
-2. 点击 **+** 添加新绑定
-3. 设置你选的快捷键
-4. Action: **Run Command**
-5. Command: `~/.local/bin/ssh-image-paste`
+1. 打开 **自动操作（Automator）** > **快速操作**
+2. "工作流程收到" 设为 **没有输入**
+3. 添加 **运行 Shell 脚本** 操作
+4. 命令: `~/.local/bin/ssh-image-paste`
+5. 保存为 "Paste Image to SSH"
+6. 打开 **系统设置** > **键盘** > **键盘快捷键** > **服务**
+7. 找到 "Paste Image to SSH"，设置你选的快捷键
 
-#### Warp / Ghostty / 其他终端
-
-对于不支持内置快捷键绑定的终端，使用 macOS 自动操作（Automator）：
-
-1. 打开 **自动操作** > **快速操作**
-2. 添加 **运行 Shell 脚本** 操作
-3. 命令: `~/.local/bin/ssh-image-paste`
-4. 保存为 "Paste Image to SSH"
-5. 在 **系统设置** > **键盘** > **键盘快捷键** > **服务** 中绑定你选的快捷键
+此方式适用于**所有终端** — iTerm2、Warp、Ghostty、Terminal.app 等。
 
 ## 支持的终端
 
