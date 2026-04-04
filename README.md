@@ -81,9 +81,21 @@ The script itself doesn't bind any shortcut — **you choose your own**. Here ar
 | `Cmd+Shift+V` | Mnemonic: paste **V**ariant |
 | `Ctrl+Shift+U` | Mnemonic: **U**pload |
 
-Pick whatever feels natural to you, then set it up using **macOS Automator** (works with any terminal):
+Pick whatever feels natural to you, then set it up:
 
-#### Set up with Automator (recommended, works globally)
+#### iTerm2 (recommended)
+
+1. Open **Settings** > **Keys** > **Key Bindings**
+2. Click **+** to add a new binding
+3. Set your preferred shortcut (e.g. `Shift+Option+Cmd+I`)
+4. Action: **Run Coprocess**
+5. Command: `~/.local/bin/ssh-image-paste >/dev/null 2>&1`
+
+> The `>/dev/null 2>&1` redirect is required — coprocess output would otherwise be sent to the terminal as input.
+
+#### Other terminals (Warp, Ghostty, Terminal.app, etc.)
+
+Use macOS Automator to create a global shortcut:
 
 1. Open **Automator** > **Quick Action**
 2. Set "Workflow receives" to **no input**
@@ -92,8 +104,6 @@ Pick whatever feels natural to you, then set it up using **macOS Automator** (wo
 5. Save as "Paste Image to SSH"
 6. Go to **System Settings** > **Keyboard** > **Keyboard Shortcuts** > **Services**
 7. Find "Paste Image to SSH" and assign your preferred shortcut
-
-This works with **all terminals** — iTerm2, Warp, Ghostty, Terminal.app, etc.
 
 ## Supported Terminals
 
