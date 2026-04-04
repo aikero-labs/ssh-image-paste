@@ -8,11 +8,9 @@
 
 ## 为什么需要这个工具？
 
-通过 SSH 远程工作时——尤其是使用 **Claude Code**、**Cursor**、**VS Code** 等 AI 编程工具——没有内置的方式将截图传到远程环境。你得手动保存文件、SCP 上传、再输入路径。
+通过 SSH 远程工作时——尤其是使用 **Claude Code**、**Codex** 等终端 AI 编程工具——没有内置的方式将截图传到远程环境。你得手动保存文件、SCP 上传、再输入路径。
 
 `ssh-image-paste` 一步搞定。
-
-> **注意：** 脚本运行在你的 **本地 macOS** 上，通过 SCP 把图片上传到远程服务器。你需要在 macOS 终端（iTerm2、Warp 等）中通过快捷键触发——不是在 VS Code 或 Cursor 的内置终端里触发。上传后的图片路径会自动复制到剪贴板，可以粘贴到远程机器的任何地方使用。
 
 ## 工作原理
 
@@ -140,15 +138,12 @@ export SSH_IMAGE_PASTE_KEEP=50
 
 ## 使用场景
 
-- **Claude Code** — SSH 到远程开发机，在 macOS 终端按快捷键上传截图，把图片路径粘贴到 Claude Code 对话中
-- **Cursor / VS Code Remote SSH** — 将截图上传到远程服务器，在编辑器或终端中引用图片路径
-- **远程结对编程** — 快速分享视觉上下文给同一台服务器上的同事
+- **Claude Code** — 将截图粘贴到远程开发机上的 AI 编程助手对话中
+- **Codex CLI** — 与 OpenAI 的终端编程工具分享视觉上下文
+- **远程结对编程** — 快速分享截图给同一台服务器上的同事
 - **Bug 报告** — 截图并附加到远程 issue 系统
 
 ## 常见问题
-
-**Q: 在 VS Code Remote 或 Cursor 内置终端里能用吗？**
-A: 不能。脚本运行在**本地 macOS**（需要 `pngpaste`、`osascript`、`pbcopy`），无法在远程终端中执行。工作流是：保持 iTerm2 也 SSH 连着同一台服务器，在 iTerm2 里按快捷键上传截图，然后回到 VS Code/Cursor 粘贴路径（`Cmd+V`）。
 
 **Q: 支持 SSH 跳板机 / ProxyJump 吗？**
 A: 支持。脚本检测最终的 SSH 进程并解析目标。也支持通过 `ssh -G` 解析 SSH config alias。

@@ -8,11 +8,9 @@ One keystroke: grab the screenshot from your clipboard, upload it to the remote 
 
 ## Why?
 
-When working remotely via SSH — especially with AI coding tools like **Claude Code**, **Cursor**, or **VS Code** — there's no built-in way to share a screenshot with the remote environment. You'd have to manually save the file, SCP it over, then type the path.
+When working remotely via SSH — especially with terminal-based AI tools like **Claude Code** or **Codex** — there's no built-in way to share a screenshot with the remote environment. You'd have to manually save the file, SCP it over, then type the path.
 
 `ssh-image-paste` does all of that in one step.
-
-> **Note:** This script runs on your **local macOS** and uploads images to the remote server via SCP. You trigger it from a macOS terminal app (iTerm2, Warp, etc.) using a keyboard shortcut — not from within VS Code or Cursor's built-in terminal. The uploaded image path is then ready to paste anywhere on the remote machine.
 
 ## How It Works
 
@@ -140,15 +138,12 @@ export SSH_IMAGE_PASTE_KEEP=50
 
 ## Use Cases
 
-- **Claude Code** — SSH into a remote dev machine, trigger the shortcut from your macOS terminal, paste the image path into the Claude Code conversation
-- **Cursor / VS Code Remote SSH** — Upload screenshots to the remote server, then reference the image path in your editor or terminal
-- **Remote pair programming** — Quickly share visual context with colleagues on the same server
+- **Claude Code** — Paste screenshots into conversations with your AI coding assistant on a remote dev machine
+- **Codex CLI** — Share visual context with OpenAI's terminal coding tool
+- **Remote pair programming** — Quickly share screenshots with colleagues on the same server
 - **Bug reports** — Capture and attach screenshots to remote issue trackers
 
 ## FAQ
-
-**Q: Does it work inside VS Code Remote or Cursor's built-in terminal?**
-A: No. The script runs on **local macOS** (it needs `pngpaste`, `osascript`, `pbcopy`). It cannot run inside a remote terminal. The workflow is: keep an iTerm2 session SSH'd into the same server, press your shortcut in iTerm2 to upload, then switch back to VS Code/Cursor and paste the path (`Cmd+V`).
 
 **Q: Does it work with SSH jump hosts / ProxyJump?**
 A: Yes. It detects the final SSH process and resolves the target. SSH config aliases are also supported via `ssh -G`.
