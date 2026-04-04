@@ -8,9 +8,11 @@
 
 ## 为什么需要这个工具？
 
-通过 SSH 远程工作时——尤其是使用 **Claude Code**、**Cursor Remote SSH**、**VS Code Remote** 等 AI 编程工具——没有内置的方式将截图传到远程环境。你得手动保存文件、SCP 上传、再输入路径。
+通过 SSH 远程工作时——尤其是使用 **Claude Code**、**Cursor**、**VS Code** 等 AI 编程工具——没有内置的方式将截图传到远程环境。你得手动保存文件、SCP 上传、再输入路径。
 
 `ssh-image-paste` 一步搞定。
+
+> **注意：** 脚本运行在你的 **本地 macOS** 上，通过 SCP 把图片上传到远程服务器。你需要在 macOS 终端（iTerm2、Warp 等）中通过快捷键触发——不是在 VS Code 或 Cursor 的内置终端里触发。上传后的图片路径会自动复制到剪贴板，可以粘贴到远程机器的任何地方使用。
 
 ## 工作原理
 
@@ -66,26 +68,38 @@ ssh-image-paste --help
 ### 典型工作流
 
 1. macOS 截图（`Cmd+Shift+4` 或 `Cmd+Shift+5`）
-2. 按快捷键（如 `Cmd+Shift+V`）运行 `ssh-image-paste`
+2. 按你设置的快捷键运行 `ssh-image-paste`
 3. 远程路径已在剪贴板中——直接 `Cmd+V` 粘贴到需要的地方
 
-### 设置 iTerm2 快捷键
+### 设置快捷键
+
+脚本本身不绑定任何快捷键——**你自己选择一个顺手的**。以下是一些推荐：
+
+| 快捷键 | 助记 |
+|--------|------|
+| `Shift+Option+Cmd+I` | **I**mage（图片） |
+| `Cmd+Shift+V` | paste **V**ariant（粘贴变体） |
+| `Ctrl+Shift+U` | **U**pload（上传） |
+
+选好后，按以下方式设置：
+
+#### iTerm2
 
 1. 打开 **Preferences** > **Keys** > **Key Bindings**
 2. 点击 **+** 添加新绑定
-3. 快捷键设为 `Cmd+Shift+V`
+3. 设置你选的快捷键
 4. Action: **Run Command**
 5. Command: `~/.local/bin/ssh-image-paste`
 
-### Warp / 其他终端设置快捷键
+#### Warp / Ghostty / 其他终端
 
-使用 macOS 自动操作（Automator）：
+对于不支持内置快捷键绑定的终端，使用 macOS 自动操作（Automator）：
 
 1. 打开 **自动操作** > **快速操作**
 2. 添加 **运行 Shell 脚本** 操作
 3. 命令: `~/.local/bin/ssh-image-paste`
 4. 保存为 "Paste Image to SSH"
-5. 在 **系统设置** > **键盘** > **键盘快捷键** > **服务** 中绑定快捷键
+5. 在 **系统设置** > **键盘** > **键盘快捷键** > **服务** 中绑定你选的快捷键
 
 ## 支持的终端
 
@@ -122,10 +136,9 @@ export SSH_IMAGE_PASTE_KEEP=50
 
 ## 使用场景
 
-- **Claude Code** — 将截图粘贴到 AI 编程助手对话中
-- **Cursor Remote SSH** — 分享 UI 设计稿或错误截图
-- **VS Code Remote** — 在远程开发中引用图片
-- **远程结对编程** — 快速分享视觉上下文
+- **Claude Code** — SSH 到远程开发机，在 macOS 终端按快捷键上传截图，把图片路径粘贴到 Claude Code 对话中
+- **Cursor / VS Code Remote SSH** — 将截图上传到远程服务器，在编辑器或终端中引用图片路径
+- **远程结对编程** — 快速分享视觉上下文给同一台服务器上的同事
 - **Bug 报告** — 截图并附加到远程 issue 系统
 
 ## 常见问题

@@ -8,9 +8,11 @@ One keystroke: grab the screenshot from your clipboard, upload it to the remote 
 
 ## Why?
 
-When working remotely via SSH — especially with AI coding tools like **Claude Code**, **Cursor Remote SSH**, or **VS Code Remote** — there's no built-in way to share a screenshot with the remote environment. You'd have to manually save the file, SCP it, then type the path.
+When working remotely via SSH — especially with AI coding tools like **Claude Code**, **Cursor**, or **VS Code** — there's no built-in way to share a screenshot with the remote environment. You'd have to manually save the file, SCP it over, then type the path.
 
 `ssh-image-paste` does all of that in one step.
+
+> **Note:** This script runs on your **local macOS** and uploads images to the remote server via SCP. You trigger it from a macOS terminal app (iTerm2, Warp, etc.) using a keyboard shortcut — not from within VS Code or Cursor's built-in terminal. The uploaded image path is then ready to paste anywhere on the remote machine.
 
 ## How It Works
 
@@ -66,18 +68,30 @@ ssh-image-paste --help
 ### Typical workflow
 
 1. Take a screenshot on macOS (`Cmd+Shift+4` or `Cmd+Shift+5`)
-2. Press your shortcut (e.g., `Cmd+Shift+V`) to run `ssh-image-paste`
+2. Press your custom shortcut to run `ssh-image-paste`
 3. The remote path is now in your clipboard — just `Cmd+V` to paste it wherever you need
 
-### Set up a keyboard shortcut (iTerm2)
+### Set up a keyboard shortcut
+
+The script itself doesn't bind any shortcut — **you choose your own**. Here are some popular choices:
+
+| Shortcut | Notes |
+|----------|-------|
+| `Shift+Option+Cmd+I` | Mnemonic: **I**mage |
+| `Cmd+Shift+V` | Mnemonic: paste **V**ariant |
+| `Ctrl+Shift+U` | Mnemonic: **U**pload |
+
+Pick whatever feels natural to you, then set it up:
+
+#### iTerm2
 
 1. Open **Preferences** > **Keys** > **Key Bindings**
 2. Click **+** to add a new binding
-3. Set shortcut: `Cmd+Shift+V`
+3. Set your preferred shortcut
 4. Action: **Run Command**
 5. Command: `~/.local/bin/ssh-image-paste`
 
-### Set up a keyboard shortcut (Warp / others)
+#### Warp / Ghostty / other terminals
 
 For terminals without built-in key binding support, use macOS Automator:
 
@@ -85,7 +99,7 @@ For terminals without built-in key binding support, use macOS Automator:
 2. Add **Run Shell Script** action
 3. Set command: `~/.local/bin/ssh-image-paste`
 4. Save as "Paste Image to SSH"
-5. Bind a shortcut in **System Settings** > **Keyboard** > **Shortcuts** > **Services**
+5. Bind your preferred shortcut in **System Settings** > **Keyboard** > **Shortcuts** > **Services**
 
 ## Supported Terminals
 
@@ -122,10 +136,9 @@ export SSH_IMAGE_PASTE_KEEP=50
 
 ## Use Cases
 
-- **Claude Code** — Paste screenshots into conversations with your AI coding assistant
-- **Cursor Remote SSH** — Share UI mockups or error screenshots with Cursor
-- **VS Code Remote** — Reference images in remote development
-- **Remote pair programming** — Quickly share visual context with colleagues
+- **Claude Code** — SSH into a remote dev machine, trigger the shortcut from your macOS terminal, paste the image path into the Claude Code conversation
+- **Cursor / VS Code Remote SSH** — Upload screenshots to the remote server, then reference the image path in your editor or terminal
+- **Remote pair programming** — Quickly share visual context with colleagues on the same server
 - **Bug reports** — Capture and attach screenshots to remote issue trackers
 
 ## FAQ
