@@ -147,7 +147,7 @@ extract_ssh_target() {
 get_ssh_from_tty() {
     local tty="$1"
     local ssh_line
-    ssh_line=$(ps -t "${tty#/dev/}" -o args= 2>/dev/null | grep -m1 "ssh ")
+    ssh_line=$(ps -t "${tty#/dev/}" -o args= 2>/dev/null | grep -m1 "[s]sh ")
     if [[ -n "$ssh_line" ]]; then
         extract_ssh_target "$ssh_line"
     fi
@@ -158,13 +158,16 @@ detect_ssh_target() {
     local frontapp
     frontapp=$(osascript -e 'tell application "System Events" to name of first application process whose frontmost is true' 2>/dev/null)
 
-    local tty
+    local tty result
     if [[ "$frontapp" == "iTerm2" ]]; then
         tty=$(osascript -e 'tell application "iTerm2" to tty of current session of current window' 2>/dev/null)
-        [[ -n "$tty" ]] && get_ssh_from_tty "$tty" && return
     elif [[ "$frontapp" == "Terminal" ]]; then
         tty=$(osascript -e 'tell application "Terminal" to tty of selected tab of front window' 2>/dev/null)
-        [[ -n "$tty" ]] && get_ssh_from_tty "$tty" && return
+    fi
+    # Filter out AppleScript null ("missing value") and try TTY-based detection
+    if [[ -n "$tty" && "$tty" != "missing value" ]]; then
+        result=$(get_ssh_from_tty "$tty")
+        [[ -n "$result" ]] && echo "$result" && return
     fi
 
     # Warp / Ghostty / Alacritty / Kitty / others: scan all SSH processes
