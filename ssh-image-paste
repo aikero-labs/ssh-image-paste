@@ -147,7 +147,7 @@ extract_ssh_target() {
 get_ssh_from_tty() {
     local tty="$1"
     local ssh_line
-    ssh_line=$(ps -t "${tty#/dev/}" -o args= 2>/dev/null | grep -m1 "ssh ")
+    ssh_line=$(ps -t "${tty#/dev/}" -o args= 2>/dev/null | grep -m1 "[s]sh ")
     if [[ -n "$ssh_line" ]]; then
         extract_ssh_target "$ssh_line"
     fi
