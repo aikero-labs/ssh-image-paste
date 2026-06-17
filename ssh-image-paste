@@ -164,13 +164,18 @@ detect_ssh_target() {
     elif [[ "$frontapp" == "Terminal" ]]; then
         tty=$(osascript -e 'tell application "Terminal" to tty of selected tab of front window' 2>/dev/null)
     fi
-    # Filter out AppleScript null ("missing value") and try TTY-based detection
+    # Filter out AppleScript null ("missing value") and try TTY-based detection.
+    # When we have a real TTY for the current session, its result is authoritative:
+    # if the focused tab is local (no ssh on its tty), return empty so we do NOT
+    # hijack the clipboard by uploading to an SSH session open in another tab.
     if [[ -n "$tty" && "$tty" != "missing value" ]]; then
         result=$(get_ssh_from_tty "$tty")
-        [[ -n "$result" ]] && echo "$result" && return
+        echo "$result"
+        return
     fi
 
-    # Warp / Ghostty / Alacritty / Kitty / others: scan all SSH processes
+    # Warp / Ghostty / Alacritty / Kitty / tmux -CC / others: no reliable per-session
+    # TTY available, so fall back to scanning all SSH processes
     local ssh_lines ssh_hosts target line
     ssh_lines=$(ps -u "$USER" -o args= | grep "[s]sh " | grep -v "grep")
     ssh_hosts=""
