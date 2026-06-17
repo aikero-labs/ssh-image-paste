@@ -33,7 +33,15 @@ When working remotely via SSH — especially with terminal-based AI tools like *
 
 ## Install
 
-### Quick install (recommended)
+### Homebrew (recommended)
+
+```bash
+brew install aikero-labs/tap/ssh-image-paste
+```
+
+This pulls in `pngpaste` automatically and keeps the tool up to date with `brew upgrade`.
+
+### Quick install (script)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/aikero-labs/ssh-image-paste/main/install.sh | bash

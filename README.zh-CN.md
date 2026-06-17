@@ -33,7 +33,15 @@
 
 ## 安装
 
-### 一键安装（推荐）
+### Homebrew（推荐）
+
+```bash
+brew install aikero-labs/tap/ssh-image-paste
+```
+
+会自动装好依赖 `pngpaste`，之后用 `brew upgrade` 即可升级。
+
+### 一键脚本安装
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/aikero-labs/ssh-image-paste/main/install.sh | bash
