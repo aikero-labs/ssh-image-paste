@@ -36,7 +36,7 @@
 ### 一键安装（推荐）
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/weworkto/ssh-image-paste/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aikero-labs/ssh-image-paste/main/install.sh | bash
 ```
 
 ### 手动安装
@@ -46,7 +46,7 @@ curl -fsSL https://raw.githubusercontent.com/weworkto/ssh-image-paste/main/insta
 brew install pngpaste
 
 # 下载安装
-curl -fsSL https://raw.githubusercontent.com/weworkto/ssh-image-paste/main/ssh-image-paste -o ~/.local/bin/ssh-image-paste
+curl -fsSL https://raw.githubusercontent.com/aikero-labs/ssh-image-paste/main/ssh-image-paste -o ~/.local/bin/ssh-image-paste
 chmod +x ~/.local/bin/ssh-image-paste
 ```
 

@@ -16,7 +16,7 @@
 #   SSH_IMAGE_PASTE_DIR   Remote directory (default: /tmp/clipboard)
 #   SSH_IMAGE_PASTE_KEEP  Max images to keep (default: 20)
 #
-# Homepage: https://github.com/weworkto/ssh-image-paste
+# Homepage: https://github.com/aikero-labs/ssh-image-paste
 #
 
 VERSION="1.0.0"
@@ -73,7 +73,7 @@ REQUIREMENTS
     - Active SSH connection (or specify target manually)
 
 HOMEPAGE
-    https://github.com/weworkto/ssh-image-paste
+    https://github.com/aikero-labs/ssh-image-paste
 EOF
 }
 

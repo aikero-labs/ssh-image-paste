@@ -3,11 +3,11 @@
 # ssh-image-paste installer
 #
 # One-liner install:
-#   curl -fsSL https://raw.githubusercontent.com/weworkto/ssh-image-paste/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/aikero-labs/ssh-image-paste/main/install.sh | bash
 #
 set -e
 
-REPO="weworkto/ssh-image-paste"
+REPO="aikero-labs/ssh-image-paste"
 BIN_DIR="${HOME}/.local/bin"
 SCRIPT_NAME="ssh-image-paste"
 

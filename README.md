@@ -36,7 +36,7 @@ When working remotely via SSH — especially with terminal-based AI tools like *
 ### Quick install (recommended)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/weworkto/ssh-image-paste/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aikero-labs/ssh-image-paste/main/install.sh | bash
 ```
 
 ### Manual install
@@ -46,7 +46,7 @@ curl -fsSL https://raw.githubusercontent.com/weworkto/ssh-image-paste/main/insta
 brew install pngpaste
 
 # Download and install
-curl -fsSL https://raw.githubusercontent.com/weworkto/ssh-image-paste/main/ssh-image-paste -o ~/.local/bin/ssh-image-paste
+curl -fsSL https://raw.githubusercontent.com/aikero-labs/ssh-image-paste/main/ssh-image-paste -o ~/.local/bin/ssh-image-paste
 chmod +x ~/.local/bin/ssh-image-paste
 ```
 
