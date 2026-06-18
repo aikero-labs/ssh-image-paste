@@ -95,8 +95,10 @@ Pick whatever feels natural to you, then set it up:
 2. Click **+** to add a new binding
 3. Set your preferred shortcut (e.g. `Shift+Option+Cmd+I`)
 4. Action: **Run Coprocess**
-5. Command: `~/.local/bin/ssh-image-paste >/dev/null 2>&1`
+5. Command: `$SHELL -lc 'ssh-image-paste' >/dev/null 2>&1`
 
+> Why `$SHELL -lc` instead of bare `ssh-image-paste`? A coprocess does **not** inherit your terminal shell's `PATH` — it runs in iTerm2's launch environment, which usually omits `/opt/homebrew/bin` (Apple Silicon) and always omits `~/.local/bin`. Wrapping in a login shell re-sources your profile so the command is found regardless of how it was installed.
+>
 > The `>/dev/null 2>&1` redirect is required — coprocess output would otherwise be sent to the terminal as input.
 
 #### Other terminals (Warp, Ghostty, Terminal.app, etc.)
@@ -106,7 +108,7 @@ Use macOS Automator to create a global shortcut:
 1. Open **Automator** > **Quick Action**
 2. Set "Workflow receives" to **no input**
 3. Add **Run Shell Script** action
-4. Set command: `~/.local/bin/ssh-image-paste`
+4. Set command: `$SHELL -lc 'ssh-image-paste'` (Automator runs with a minimal `PATH`, so wrap in a login shell)
 5. Save as "Paste Image to SSH"
 6. Go to **System Settings** > **Keyboard** > **Keyboard Shortcuts** > **Services**
 7. Find "Paste Image to SSH" and assign your preferred shortcut

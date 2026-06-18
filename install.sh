@@ -36,14 +36,22 @@ echo "Downloading from ${DOWNLOAD_URL}..."
 curl -fsSL "$DOWNLOAD_URL" -o "${BIN_DIR}/${SCRIPT_NAME}"
 chmod +x "${BIN_DIR}/${SCRIPT_NAME}"
 
-# Check PATH
+# Ensure ~/.local/bin is on PATH via a login-shell profile.
+# We write to .zprofile/.bash_profile (login shells) on purpose: the recommended
+# keyboard-shortcut command uses `$SHELL -lc`, which sources login profiles but
+# NOT .zshrc — so the export must live in a login profile to be picked up.
+PATH_LINE='export PATH="$HOME/.local/bin:$PATH"'
+if [[ "$SHELL" == */bash ]]; then
+    PROFILE="${HOME}/.bash_profile"
+else
+    PROFILE="${HOME}/.zprofile"
+fi
 if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
-    echo ""
-    echo "Note: $BIN_DIR is not in your PATH. Add it:"
-    SHELL_RC="~/.zshrc"
-    [[ "$SHELL" == */bash ]] && SHELL_RC="~/.bashrc"
-    echo "  echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> $SHELL_RC"
-    echo ""
+    if ! grep -qsF "$BIN_DIR" "$PROFILE"; then
+        echo "$PATH_LINE" >> "$PROFILE"
+        echo "Added $BIN_DIR to PATH in $PROFILE"
+    fi
+    echo "Restart your terminal (or run: source $PROFILE) to pick up the new PATH."
 fi
 
 echo ""
@@ -57,6 +65,6 @@ echo ""
 echo "  iTerm2: Settings > Keys > Key Bindings > +"
 echo "    Shortcut:  your choice (e.g. Shift+Option+Cmd+I)"
 echo "    Action:    Run Coprocess"
-echo "    Command:   ${BIN_DIR}/${SCRIPT_NAME} >/dev/null 2>&1"
+echo "    Command:   \$SHELL -lc '${SCRIPT_NAME}' >/dev/null 2>&1"
 echo ""
 echo "  Other terminals: see https://github.com/${REPO}#set-up-a-keyboard-shortcut"

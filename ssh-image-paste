@@ -19,7 +19,7 @@
 # Homepage: https://github.com/aikero-labs/ssh-image-paste
 #
 
-VERSION="1.0.0"
+VERSION="1.0.1"
 
 # --- i18n ---
 if [[ "${LANG:-}" == zh_CN* ]] || [[ "${LANG:-}" == zh_TW* ]]; then

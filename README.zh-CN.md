@@ -95,7 +95,9 @@ ssh-image-paste --help
 2. 点击 **+** 添加新绑定
 3. 设置你选的快捷键（如 `Shift+Option+Cmd+I`）
 4. Action: **Run Coprocess**
-5. Command: `~/.local/bin/ssh-image-paste >/dev/null 2>&1`
+5. Command: `$SHELL -lc 'ssh-image-paste' >/dev/null 2>&1`
+
+> 为什么用 `$SHELL -lc` 而不是裸 `ssh-image-paste`?coprocess **不继承**你终端 shell 的 `PATH`,它跑在 iTerm2 的启动环境里,通常不含 `/opt/homebrew/bin`(Apple Silicon)、也永远不含 `~/.local/bin`。包一层登录 shell 会重新加载你的 profile,这样不管用哪种方式安装都能找到命令。
 
 > `>/dev/null 2>&1` 是必须的——coprocess 的输出会被当作终端输入，必须丢弃。
 
@@ -106,7 +108,7 @@ ssh-image-paste --help
 1. 打开 **自动操作** > **快速操作**
 2. "工作流程收到" 设为 **没有输入**
 3. 添加 **运行 Shell 脚本** 操作
-4. 命令: `~/.local/bin/ssh-image-paste`
+4. 命令: `$SHELL -lc 'ssh-image-paste'`(Automator 的 PATH 很精简,所以包一层登录 shell)
 5. 保存为 "Paste Image to SSH"
 6. 打开 **系统设置** > **键盘** > **键盘快捷键** > **服务**
 7. 找到 "Paste Image to SSH"，设置你选的快捷键
